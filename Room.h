@@ -1,7 +1,7 @@
 #pragma once
 #include "Location.h"
 
-//Room represents a room inside the building
+// Room represents a room inside the building
 // Room inherits the ID and name from Location
 class Room : public Location { 
 public:
