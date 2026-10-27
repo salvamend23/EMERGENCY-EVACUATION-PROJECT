@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="EmergencyEvacuation.vcxproj" Id="311fb684-6739-4012-a06d-40e1d80efea1" />
+</Solution>

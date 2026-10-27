@@ -1,0 +1,24 @@
+
+# Visual Studio temporary files
+.vs/
+
+# Compiled files
+Debug/
+Release/
+x64/
+x86/
+
+# Build artifacts
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.exe
+*.tlog
+*.lastbuildstate
+
+# User-specific settings
+*.suo
+*.user
+*.VC.db
+*.VC.opendb

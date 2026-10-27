@@ -1,16 +1,22 @@
+#include <iostream>
+using namespace std;
+#include <vector>
 #pragma once
-#include "Location.h"
 
-//Room represents a room inside the building
-// Room inherits the ID and name from Location
-class Room : public Location { 
+
+class room {
 public:
-	Room(int roomId, const std::string& roomName)
-		: Location(roomId, roomName) {
-	}
+    int id;
+    string name;
+    vector<int> connections;
 
-	//identify this location as a room
-	std::string getLocationType() const override {
-		return "Room";
-	}
+    room(int number, string roomname) {
+        id = number;
+        name = roomname;
+    }
+    void addconection(int hallid) {
+        connections.push_back(hallid);
+
+    }
+
 };

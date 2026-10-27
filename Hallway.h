@@ -1,37 +1,18 @@
+#include <iostream>
+using namespace std;
+#include <vector>
 #pragma once
 
-class Hallway {
-private:
-    int locationAId;
-    int locationBId;
-    double distance;
-    bool blocked;
 
+
+class hallways {
 public:
-    Hallway(int firstLocationId, int secondLocationId, double hallwayDistance)
-        : locationAId(firstLocationId),
-        locationBId(secondLocationId),
-        distance(hallwayDistance),
-        blocked(false) {
+    int hallid;
+    vector <int> hallconnections;
+    hallways(int number) {
+        hallid = number;
     }
-
-    int getLocationAId() const {
-        return locationAId;
-    }
-
-    int getLocationBId() const {
-        return locationBId;
-    }
-
-    double getDistance() const {
-        return distance;
-    }
-
-    bool isBlocked() const {
-        return blocked;
-    }
-
-    void setBlocked(bool isBlocked) {
-        blocked = isBlocked;
+    void addhallConnection(int location) {
+        hallconnections.push_back(location);
     }
 };
