@@ -18,7 +18,26 @@ int main()
     Exit exit1(201, "Exit 1");
     Exit exit2(202, "Exit 2");
 
+    // test exception handling
+    try {
+        hall1.block();
 
+        cout << "Hallway " << hall1.getId()
+             << " was successfully blocked." << endl;
+
+        // attempt to block the same hallway again
+        hall1.block();
+    }
+    catch (const exception& error) {
+        cout << "Error: " << error.what() << endl;
+    }
+
+    cout << "Hallway " << hall1.getId()
+         << " is blocked: "
+         << (hall1.isBlocked() ? "Yes" : "No") << endl;
+
+    cout << "The program is still running." << endl;
+    
     Room a(1, "Conference Room");
     Room b(2, "kitchen");
 
