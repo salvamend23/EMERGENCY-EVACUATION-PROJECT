@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1430</width>
+    <height>699</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>40</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>FireScape</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>90</y>
+      <width>241</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Emergency Evacuation Simulator</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>39</x>
+      <y>140</y>
+      <width>871</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Building Map</string>
+    </property>
+    <widget class="QWidget" name="mapWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>851</width>
+       <height>461</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>400</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>150</y>
+      <width>302</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Controls</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QComboBox" name="findRouteButton_2">
+       <item>
+        <property name="text">
+         <string>Room 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 8</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 11</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 12</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="findRouteButton">
+       <property name="text">
+        <string>Find Evacuation Route</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="blockHallwayButton">
+       <property name="text">
+        <string>Block / Unblock Hallway</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="toggleExitButton">
+       <property name="text">
+        <string>Compare Two Exits</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="routeInfoLabel">
+       <property name="text">
+        <string>Select a room to find its evacuation route</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1430</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
