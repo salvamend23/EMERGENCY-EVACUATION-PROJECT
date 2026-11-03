@@ -1,5 +1,4 @@
 #include "mapwidget.h"
-
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPolygon>
@@ -24,7 +23,7 @@ void MapWidget::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    // Scale the map to fit the available area.
+    // scale the map to fit the available area
     const qreal scaleX = width() / 780.0;
     const qreal scaleY = height() / 580.0;
     const qreal scale = qMin(scaleX, scaleY);
@@ -69,7 +68,7 @@ void MapWidget::paintEvent(QPaintEvent *event)
             );
     };
 
-    // Draw a tree with a trunk and leafy canopy
+    // tree with a trunk and leafy canopy
     auto drawTree = [&](int x, int y, int size)
     {
         // Trunk
@@ -88,12 +87,12 @@ void MapWidget::paintEvent(QPaintEvent *event)
                             size / 2, size / 2);
     };
 
-    // Central garden background
+    // central garden background
     painter.setPen(Qt::NoPen);
     painter.setBrush(QColor(205, 230, 185));
     painter.drawRect(230, 190, 330, 200);
 
-    // Draw a leafy tree
+    // leafy tree
     auto drawGardenTree = [&](int x, int y, int size)
     {
         // Trunk
@@ -110,7 +109,7 @@ void MapWidget::paintEvent(QPaintEvent *event)
                             size / 2, size / 2);
     };
 
-    // Small leafy plants
+    // leafy plants
     auto drawPlant = [&](int x, int y)
     {
         painter.setBrush(QColor(45, 125, 55));
@@ -119,7 +118,7 @@ void MapWidget::paintEvent(QPaintEvent *event)
         painter.drawEllipse(x + 9, y + 2, 10, 8);
     };
 
-    // Colorful flowers
+    // flowers
     auto drawFlower = [&](int x, int y, QColor color)
     {
         painter.setBrush(QColor(65, 115, 45));
@@ -136,13 +135,13 @@ void MapWidget::paintEvent(QPaintEvent *event)
         painter.drawEllipse(x + 3, y + 1, 4, 4);
     };
 
-    // Irregularly placed trees around the garden
+    // irregularly placed trees around the garden
     drawGardenTree(242, 205, 32);
     drawGardenTree(493, 208, 36);
     drawGardenTree(250, 325, 30);
     drawGardenTree(500, 330, 32);
 
-    // A few shrubs and leafy plants
+    // shrubs and leafy plants
     drawPlant(290, 215);
     drawPlant(455, 225);
     drawPlant(285, 315);
@@ -150,7 +149,7 @@ void MapWidget::paintEvent(QPaintEvent *event)
     drawPlant(330, 350);
     drawPlant(440, 355);
 
-    // Flower beds
+    // flower beds
     drawFlower(300, 250, QColor(235, 105, 145));
     drawFlower(325, 275, QColor(245, 210, 75));
     drawFlower(465, 270, QColor(170, 115, 220));
@@ -158,31 +157,32 @@ void MapWidget::paintEvent(QPaintEvent *event)
     drawFlower(350, 350, QColor(245, 210, 75));
     drawFlower(420, 350, QColor(170, 115, 220));
 
-    // Circular fountain in the center
+    // fountain in the center
     painter.setPen(QPen(QColor(120, 140, 150), 2));
     painter.setBrush(QColor(150, 205, 220));
     painter.drawEllipse(365, 255, 65, 65);
 
-    // Fountain rim
+    // fountain rim
     painter.setBrush(Qt::NoBrush);
     painter.drawEllipse(370, 260, 55, 55);
 
-    // Water in the middle
+    // water in the middle
     painter.setPen(Qt::NoPen);
     painter.setBrush(QColor(80, 160, 205));
     painter.drawEllipse(382, 272, 31, 31);
 
-    // Fountain centerpiece
+    // fountain centerpiece
     painter.setBrush(QColor(225, 235, 240));
     painter.drawEllipse(391, 278, 13, 13);
     painter.drawLine(397, 278, 397, 267);
-    // Trees around the edges of the courtyard
+
+    // trees around the edges of the courtyard
     drawGardenTree(238, 200, 28);
     drawGardenTree(505, 205, 32);
     drawGardenTree(242, 342, 30);
     drawGardenTree(510, 340, 27);
 
-    // Natural groups of shrubs
+    // shrubs
     drawPlant(280, 218);
     drawPlant(300, 232);
     drawPlant(465, 218);
@@ -193,7 +193,7 @@ void MapWidget::paintEvent(QPaintEvent *event)
     drawPlant(465, 320);
     drawPlant(485, 310);
 
-    // Flower patches around the fountain
+    // flower patches around the fountain
     drawFlower(315, 240, QColor(240, 100, 145));
     drawFlower(340, 220, QColor(255, 210, 70));
     drawFlower(460, 250, QColor(170, 115, 220));
@@ -204,40 +204,35 @@ void MapWidget::paintEvent(QPaintEvent *event)
     drawFlower(445, 340, QColor(255, 210, 70));
     drawFlower(475, 320, QColor(170, 115, 220));
 
-    // Fountain basin
+    // fountain basin
     painter.setPen(QPen(QColor(115, 135, 145), 2));
     painter.setBrush(QColor(190, 215, 220));
     painter.drawEllipse(370, 260, 60, 60);
 
-    // Water
+    // water
     painter.setPen(Qt::NoPen);
     painter.setBrush(QColor(75, 165, 210));
     painter.drawEllipse(377, 267, 46, 46);
 
-    // Fountain center
+    // fountain center
     painter.setBrush(QColor(225, 240, 245));
     painter.drawEllipse(393, 282, 14, 14);
 
-    // Water ripples
+    // water ripples
     painter.setPen(QPen(QColor(210, 240, 250), 2));
     painter.setBrush(Qt::NoBrush);
     painter.drawEllipse(384, 274, 32, 32);
 
 
-    // ================================================
     // HALLWAYS
-    // ================================================
-
     drawHallway(160, 125, 470, 65, "Hallway 1");
     drawHallway(160, 190, 70, 200, "Hallway 4");
     drawHallway(560, 190, 70, 200, "Hallway 2");
     drawHallway(160, 390, 470, 65, "Hallway 3");
 
-    // ================================================
     // ROOMS
-    // ================================================
 
-    // Room 1: L-shaped upper-left room
+    // room 1: L-shaped upper-left room
     painter.setPen(wallPen);
     painter.setBrush(roomBrush);
 
@@ -257,11 +252,11 @@ void MapWidget::paintEvent(QPaintEvent *event)
         "Room 1"
         );
 
-    // Rooms 2 and 3
+    // rooms 2 and 3
     drawRoom(230, 25, 160, 100, 2);
     drawRoom(390, 25, 170, 100, 3);
 
-    // Room 4: L-shaped upper-right room
+    // room 4: L-shaped upper-right room
     painter.setPen(wallPen);
     painter.setBrush(roomBrush);
 
@@ -281,15 +276,15 @@ void MapWidget::paintEvent(QPaintEvent *event)
         "Room 4"
         );
 
-    // Rooms 12 and 11: left side
+    // rooms 12 and 11: left side
     drawRoom(60, 190, 100, 100, 12);
     drawRoom(60, 290, 100, 100, 11);
 
-    // Rooms 5 and 6: right side
+    // rooms 5 and 6: right side
     drawRoom(630, 190, 100, 100, 5);
     drawRoom(630, 290, 100, 100, 6);
 
-    // Room 10: L-shaped lower-left room
+    // room 10: L-shaped lower-left room
     painter.setPen(wallPen);
     painter.setBrush(roomBrush);
 
@@ -309,11 +304,11 @@ void MapWidget::paintEvent(QPaintEvent *event)
         "Room 10"
         );
 
-    // Rooms 9 and 8: bottom row
+    // rooms 9 and 8: bottom row
     drawRoom(230, 455, 160, 100, 9);
     drawRoom(390, 455, 170, 100, 8);
 
-    // Room 7: L-shaped lower-right room
+    // room 7: L-shaped lower-right room
     painter.setPen(wallPen);
     painter.setBrush(roomBrush);
 
@@ -331,5 +326,35 @@ void MapWidget::paintEvent(QPaintEvent *event)
         QRect(560, 455, 170, 100),
         Qt::AlignCenter,
         "Room 7"
+        );
+
+    // EXITS
+
+    QPen exitPen(QColor(200, 35, 35), 2);
+    QBrush exitBrush(Qt::white);
+
+    painter.setPen(exitPen);
+    painter.setBrush(exitBrush);
+
+    // exit 1: top of Hallway 1
+    painter.drawRoundedRect(370, 114, 54, 22, 4, 4);
+
+    painter.setPen(QColor(200, 35, 35));
+    painter.drawText(
+        QRect(370, 114, 54, 22),
+        Qt::AlignCenter,
+        "EXIT"
+        );
+
+    // exit 2: bottom of Hallway 3
+    painter.setPen(exitPen);
+    painter.setBrush(exitBrush);
+    painter.drawRoundedRect(370, 444, 54, 22, 4, 4);
+
+    painter.setPen(QColor(200, 35, 35));
+    painter.drawText(
+        QRect(370, 444, 54, 22),
+        Qt::AlignCenter,
+        "EXIT"
         );
 }
