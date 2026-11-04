@@ -197,7 +197,24 @@ int main()
     }
     cout << "\n\n";
 
+// TESTING HALLWAY BLOCKING AND EXCEPTION HANDLING
+cout << "\nTESTING HALLWAY BLOCKING:\n";
 
+try {
+    hall1.block();
+    cout << "Hallway 101 blocked successfully.\n";
+
+    hall1.block();
+    cout << "Hallway 101 blocked again.\n";
+}
+catch (const logic_error& e) {
+    cout << "Error: " << e.what() << endl;
+}
+
+cout << "Hallway 101 blocked status: "
+     << hall1.isBlocked() << endl;
+
+cout << "Program continues running.\n";
 
     //// initialization of pathfinder
 
