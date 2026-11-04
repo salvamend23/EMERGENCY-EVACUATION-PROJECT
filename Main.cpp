@@ -1,14 +1,24 @@
+// PROJECT DEMO PRACTICE.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
 #include <iostream>
 #include <vector>
 #include <string>
-using namespace std;
+#include <map>
+#include <set>
+#include <limits>
+#include <algorithm>
 
 #include "Room.h"
 #include "Hallway.h"
 #include "Exit.h"
+#include "Pathfinder.h"
+
+using namespace std;
 
 
 int main()
+
 {
     vector<room> rooms;
     hallways hall1(101);
@@ -189,5 +199,86 @@ int main()
 
 
 
+    //// initialization of pathfinder
+
+    Pathfinder pathfinder;
+    pathfinder.addconnections(101, 102, 20.0);
+    pathfinder.addconnections(101, 104, 25.0);
+    pathfinder.addconnections(102, 103, 20.0);
+    pathfinder.addconnections(103, 104, 25.0);
+
+
+    for (Connection c : pathfinder.connections) {
+        cout << "from " << c.from << "to --> " << c.to << ", Distance: " << c.distance << "METERS" << endl;
+
+    }
+    // ADD CONNECTIONS OF ROOMS TO HALLWAYS BY DISTANCE
+    for (room& r : rooms) {
+        for (int hallid : r.connections) {
+            pathfinder.addconnections(r.id, hallid, 10.0);
+        }
+    }
+    // CONENCT EXIT TO THE HALLWAY BY DISTANCE
+    pathfinder.addconnections(101, 201, 3.0);
+    pathfinder.addconnections(103, 202, 3.0);
+
+    cout << "\nTotal connections: " << pathfinder.connections.size() << endl;
+
+
+    // NEIGHBOR TEST
+    cout << "\n\nNeighbors of hall 101: " << endl;
+    pathfinder.showneighbors(101);
+    cout << "\nNeighbors of hall 103: " << endl;
+    pathfinder.showneighbors(103);
+
+    cout << "\nNeighbors of room 8: " << endl;
+    pathfinder.showneighbors(8);
+
+
+
+
+
+    //START OF DJIKSTRA ALGORITHM
+    cout << "\nTESTING DIJKSTRA:\n";
+
+
+
+
+
+
+    path_results results = pathfinder.simulate_emergency(5, 202);// TESTING THE EMERGENCY SIMULATION FUNCTION
+
+    cout << "\nDEBUG found: " << results.found << endl;
+    cout << "DEBUG exit: " << results.exitid << endl;
+    cout << "DEBUG route size: " << results.route.size() << endl;
+
+
+    if (results.found) {
+        cout << "\nNearest Exit id: " << results.exitid;
+
+        cout << "\nBest Evacuation route: ";
+        for (int i : results.route) {
+            cout << i << " ";
+            if (i != results.route.back()) {
+                cout << "-> ";
+            }
+        }
+        cout << "\nTotal distance: " << results.total_distance << " METERS" << endl;
+
+
+
+
+    }
+
+
+    cout << "\n\n";
+    pathfinder.compare_routes(5); // TESTING THE COMPARE ROUTES FUNCTION
+
+
+
+
+
 
 }
+
+

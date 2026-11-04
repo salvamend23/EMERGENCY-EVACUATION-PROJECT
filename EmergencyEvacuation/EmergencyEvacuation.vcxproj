@@ -143,6 +143,7 @@
     <ClInclude Include="..\Exit.h" />
     <ClInclude Include="..\Hallway.h" />
     <ClInclude Include="..\Location.h" />
+    <ClInclude Include="..\Pathfinder.h" />
     <ClInclude Include="..\Room.h" />
   </ItemGroup>
   <ItemGroup>
