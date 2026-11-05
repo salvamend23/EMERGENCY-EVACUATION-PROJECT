@@ -271,11 +271,23 @@ int main()
     }
 
 
-    cout << "\n\n";
+    
     pathfinder.compare_routes(5); // TESTING THE COMPARE ROUTES FUNCTION
 
+    cout << "\n\n";
+    // TESTING EXCEPTION HANDLING
+    try {
+        int testRoom = 15;
 
+        if (testRoom < 1 || testRoom > 12) {
+            throw invalid_argument("Invalid room ID! Room must be between 1 and 12.");
+        }
 
+        cout << "\nValid room: " << testRoom << endl;
+    }
+    catch (const invalid_argument& e) {
+        cerr << "\nERROR: " << e.what() << endl;
+    }
 
 
 
