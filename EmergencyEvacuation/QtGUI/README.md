@@ -9,8 +9,7 @@ GUI Framework
 - Visual Studio Community 2022
 - CMake
 
-Project File Structure
-The project is organized into source files, header files, and interface files that work together to implement the FireScape GUI.
+Project File Structure: The project is organized into source files, header files, and interface files that work together to implement the FireScape GUI.
 - main.cpp – Contains the application's entry point and initializes the Qt application.
 - mainwindow.h / mainwindow.cpp – Define and implement the main application window, including button actions, user interactions, and communication between the GUI and the application logic.
 - mainwindow.ui – Defines the main window's visual layout and interface elements using Qt Designer.
