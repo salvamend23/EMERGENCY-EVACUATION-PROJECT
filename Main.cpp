@@ -8,6 +8,7 @@
 #include <set>
 #include <limits>
 #include <algorithm>
+#include <stdexcept>
 
 #include "Room.h"
 #include "Hallway.h"
@@ -34,16 +35,16 @@ int main()
 
     rooms.push_back(a);
     rooms.push_back(b);
-    rooms.push_back(room(3, "Living Room"));
-    rooms.push_back(room(4, "Bedroom"));
-    rooms.push_back(room(5, "Bathroom"));
-    rooms.push_back(room(6, "Dining Room"));
-    rooms.push_back(room(7, "Game Room"));
-    rooms.push_back(room(8, "Study Room"));
-    rooms.push_back(room(9, "Lanai"));
-    rooms.push_back(room(10, "Teachers Room"));
-    rooms.push_back(room(11, "Club Room"));
-    rooms.push_back(room(12, "Hobby Lobby"));
+    rooms.push_back(Room(3, "Living Room"));
+    rooms.push_back(Room(4, "Bedroom"));
+    rooms.push_back(Room(5, "Bathroom"));
+    rooms.push_back(Room(6, "Dining Room"));
+    rooms.push_back(Room(7, "Game Room"));
+    rooms.push_back(Room(8, "Study Room"));
+    rooms.push_back(Room(9, "Lanai"));
+    rooms.push_back(Room(10, "Teachers Room"));
+    rooms.push_back(Room(11, "Club Room"));
+    rooms.push_back(Room(12, "Hobby Lobby"));
 
 
     // DISPLAY ROOMS
@@ -137,7 +138,7 @@ int main()
     exitLocations.push_back(exit1);
     exitLocations.push_back(exit2);
 
-    for (const Exit& currentExit : exitlocations) {
+    for (const Exit& currentExit : exitLocations) {
         cout << "Exit Number: " << currentExit.getId() << endl;
         cout << "Availability: " << currentExit.isAvailable() << endl;
     }
@@ -193,7 +194,7 @@ int main()
     hallways.push_back(hall4);
 
     cout << "\n\n";
-    for (const Hallways& currentHallway : hallways) {
+    for (const Hallway& currentHallway : hallways) {
         cout << "Hallway ID: " << currentHallway.getId() << endl;
     }
     cout << "\n\n";
