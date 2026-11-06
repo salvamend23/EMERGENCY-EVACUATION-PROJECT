@@ -36,7 +36,12 @@ public:
 		}
 
 	}
-	path_results calculate_distances(int startid, int blockedHallwayId = -1, int targetExitId = -1) {
+	path_results calculate_distances(
+		int startid,
+		int blockedHallwayId = -1,
+		int targetExitId = -1,
+		const set<int>& blockedExitIds = {}
+	) {
 		path_results results;
 		if (startid == blockedHallwayId) { // THIS WILL RETURN THE ORIGINAL RESULTS IF THE START LOCATION IS BLOCKED
 			return results;
@@ -75,7 +80,10 @@ public:
 					continue; //  this will skip blocked hallway
 				}
 
-
+				if (blockedExitIds.count(c.from) > 0 ||
+    				blockedExitIds.count(c.to) > 0) {
+   					 continue;
+				}
 
 				if (c.from == current && visited.count(c.to) == 0) {
 
