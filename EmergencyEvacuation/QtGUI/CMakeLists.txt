@@ -11,7 +11,20 @@ qt_add_executable(FireScape
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    mapwidget.h mapwidget.cpp
+    mapwidget.h 
+    mapwidget.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Building.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Location.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Room.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Hallway.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Exit.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Pathfinder.h
+)
+
+# adds the root project directory to the include paths
+# so the Qt application can access the shared header files.
+target_include_directories(FireScape PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
 )
 
 target_link_libraries(FireScape
