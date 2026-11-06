@@ -189,10 +189,10 @@ public:
 
 	// COMPARE ROUTES TO EXITS
 
-	void compare_routes(int startid) {
-		path_results path1 = calculate_distances(startid, -1, 201);
+	void compare_routes(int startid, int blockedHallwayId = -1) {
+		path_results path1 = calculate_distances(startid, blockedHallwayId, 201);
 
-		path_results path2 = calculate_distances(startid, -1, 202);
+		path_results path2 = calculate_distances(startid, blockedHallwayId, 202);
 
 		cout << "\n\nComparing routes to exits from room " << startid << ":\n";
 
@@ -215,28 +215,30 @@ public:
 
 		cout << "\nBest route to exit from room " << startid << ": ";
 
-		if (path1.found && path2.found) {
-
+				if (path1.found && path2.found) {
 			if (path1.total_distance < path2.total_distance) {
-
-				cout << "Exit 201 is the best route with a distance of " << path1.total_distance << " METERS" << endl; 
+				cout << "Exit 201 is the best route with a distance of "
+					<< path1.total_distance << " METERS" << endl;
 			}
-
-			if (path1.total_distance > path2.total_distance) {
-				cout << "Exit 202 is the best route with a distance of " << path2.total_distance << " METERS" << endl;
+			else if (path2.total_distance < path1.total_distance) {
+				cout << "Exit 202 is the best route with a distance of "
+					<< path2.total_distance << " METERS" << endl;
 			}
-			else if (path1.total_distance == path2.total_distance) {
-				cout << "Both exits are equally distant with a distance of " << path1.total_distance << " METERS" << endl;
+			else {
+				cout << "Both exits are equally distant with a distance of "
+					<< path1.total_distance << " METERS" << endl;
 			}
-		
-		
-		
-		
 		}
-
-
+		else if (path1.found) {
+			cout << "Exit 201 is the best available route with a distance of "
+				<< path1.total_distance << " METERS" << endl;
+		}
+		else if (path2.found) {
+			cout << "Exit 202 is the best available route with a distance of "
+				<< path2.total_distance << " METERS" << endl;
+		}
+		else {
+			cout << "No evacuation route is available." << endl;
+		}
 	}
-
-
-
 };
