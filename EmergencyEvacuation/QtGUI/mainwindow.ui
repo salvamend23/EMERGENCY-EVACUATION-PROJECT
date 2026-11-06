@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1430</width>
+    <height>699</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>10</y>
+      <width>221</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>24</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #E05A36;</string>
+    </property>
+    <property name="text">
+     <string>FireScape</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>60</y>
+      <width>411</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #34495E;</string>
+    </property>
+    <property name="text">
+     <string>Emergency Evacuation Simulator</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>39</x>
+      <y>140</y>
+      <width>871</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Building Map</string>
+    </property>
+    <widget class="QWidget" name="mapWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>851</width>
+       <height>461</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>400</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>90</y>
+      <width>381</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Controls</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="routeInfoLabel">
+       <property name="text">
+        <string>Select a room to find its evacuation route</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="findRouteButton_2">
+       <property name="styleSheet">
+        <string notr="true">QComboBox {
+    background-color: #D6EAF8;
+    color: #154360;
+    border: 1px solid #3498DB;
+    border-radius: 6px;
+    padding: 6px;
+}</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Room 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 6</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 7</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 8</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 11</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Room 12</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="findRouteButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #2980B9;
+}</string>
+       </property>
+       <property name="text">
+        <string>Find Evacuation Route</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="hallwayComboBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QComboBox {
+    background-color: #EAECEE;
+    color: #34495E;
+    border: 1px solid #85929E;
+    border-radius: 6px;
+    padding: 6px;
+}</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Hallway 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Hallway 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Hallway 3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Hallway 4</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="blockHallwayButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #E74C3C;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #C0392B;
+}</string>
+       </property>
+       <property name="text">
+        <string>Block / Unblock Hallway</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="exitComboBox">
+       <property name="styleSheet">
+        <string notr="true">QComboBox {
+    background-color: #D5F5E3;
+    color: #145A32;
+    border: 1px solid #27AE60;
+    border-radius: 6px;
+    padding: 6px;
+}</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Exit 1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Exit 2</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="blockExitButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #E67E22;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #D35400;
+}</string>
+       </property>
+       <property name="text">
+        <string>Block / Unblock Exit</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="compareExitsButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #27AE60;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #219150;
+}</string>
+       </property>
+       <property name="text">
+        <string>Compare Two Exits</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="styleSheet">
+        <string notr="true">background-color: #7E57C2;
+color: white;
+border: 1px solid #5E35B1;
+border-radius: 5px;</string>
+       </property>
+       <property name="text">
+        <string>Used Emergencies</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>110</y>
+      <width>451</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #7F8C8D;</string>
+    </property>
+    <property name="text">
+     <string>An interactive evacuation simulator for educational buildings</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="legendGroupBox">
+    <property name="geometry">
+     <rect>
+      <x>930</x>
+      <y>530</y>
+      <width>341</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Map Legend</string>
+    </property>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>191</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>🟩 Recommended Route</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>50</y>
+       <width>191</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>🟥 Blocked Hallway / Exit</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>70</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>🟨 Selected Room</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>100</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>🔥 Fire Location</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="statusLabel">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>480</y>
+      <width>251</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #34495E;</string>
+    </property>
+    <property name="text">
+     <string>Status: Ready</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1430</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
