@@ -9,11 +9,79 @@
 #include <QPoint>
 #include <QPen>
 #include <QBrush>
+#include <QPainterPath>
 
-MapWidget::MapWidget(QWidget *parent)
-    : QWidget(parent)
+MapWidget::MapWidget(Building& building, QWidget *parent)
+    : QWidget(parent), building(building)
 {
     setMinimumSize(500, 400);
+}
+
+void MapWidget::setHallwayBlocked(int hallwayId, bool blocked)
+{
+    if (blocked)
+    {
+        blockedHallways.insert(hallwayId);
+    }
+    else
+    {
+        blockedHallways.erase(hallwayId);
+    }
+
+    update();
+}
+
+bool MapWidget::isHallwayBlocked(int hallwayId) const
+{
+    return blockedHallways.count(hallwayId) > 0;
+}
+
+void MapWidget::setExitBlocked(int exitId, bool blocked)
+{
+    if (blocked)
+    {
+        blockedExits.insert(exitId);
+    }
+    else
+    {
+        blockedExits.erase(exitId);
+    }
+
+    update();
+}
+
+bool MapWidget::isExitBlocked(int exitId) const
+{
+    return blockedExits.count(exitId) > 0;
+}
+
+void MapWidget::setSelectedRoom(int roomId)
+{
+    selectedRoomId = roomId;
+    update();
+}
+
+void MapWidget::setRoute(const std::vector<int>& route)
+{
+    currentRoute = route;
+    update();
+}
+
+void drawPerson(QPainter& painter, int x, int y, QColor shirtColor)
+{
+    // Head
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QColor(235, 190, 150));
+    painter.drawEllipse(x + 6, y, 14, 14);
+
+    // Body
+    painter.setBrush(shirtColor);
+    painter.drawRoundedRect(x + 4, y + 15, 18, 25, 5, 5);
+
+    // Legs
+    painter.setPen(QPen(Qt::black, 2));
+    painter.drawLine(x + 9, y + 40, x + 7, y + 52);
+    painter.drawLine(x + 17, y + 40, x + 19, y + 52);
 }
 
 void MapWidget::paintEvent(QPaintEvent *event)
@@ -37,12 +105,22 @@ void MapWidget::paintEvent(QPaintEvent *event)
 
     const QPen wallPen(Qt::black, 2);
     const QBrush roomBrush(QColor(220, 235, 250));
+    const QBrush selectedRoomBrush(QColor(255, 235, 150));
     const QBrush hallwayBrush(QColor(245, 245, 245));
 
     auto drawRoom = [&](int x, int y, int w, int h, int number)
     {
         painter.setPen(wallPen);
-        painter.setBrush(roomBrush);
+
+        if (selectedRoomId == number)
+        {
+            painter.setBrush(selectedRoomBrush);
+        }
+        else
+        {
+            painter.setBrush(roomBrush);
+        }
+
         painter.drawRect(x, y, w, h);
 
         painter.setPen(Qt::black);
@@ -54,19 +132,65 @@ void MapWidget::paintEvent(QPaintEvent *event)
     };
 
     auto drawHallway = [&](int x, int y, int w, int h,
-                           const QString &label)
-    {
-        painter.setPen(wallPen);
-        painter.setBrush(hallwayBrush);
-        painter.drawRect(x, y, w, h);
+        const QString& label, int hallwayId)
+        {
+            bool isBlocked = blockedHallways.count(hallwayId) > 0;
 
-        painter.setPen(Qt::black);
-        painter.drawText(
-            QRect(x, y, w, h),
-            Qt::AlignCenter,
-            label
+            painter.setPen(wallPen);
+
+            if (isBlocked)
+                painter.setBrush(QColor(230, 100, 100));
+            else
+                painter.setBrush(hallwayBrush);
+
+            painter.drawRect(x, y, w, h);
+
+            if (isBlocked)
+            {
+
+                // Draw a more visible fire
+                painter.setPen(Qt::NoPen);
+
+                // Outer flame
+                QPolygon fire;
+                fire << QPoint(x + w / 2, y + h / 2 + 18)
+                    << QPoint(x + w / 2 - 13, y + h / 2 + 5)
+                    << QPoint(x + w / 2 - 10, y + h / 2 - 8)
+                    << QPoint(x + w / 2 - 4, y + h / 2 - 2)
+                    << QPoint(x + w / 2, y + h / 2 - 22)
+                    << QPoint(x + w / 2 + 5, y + h / 2 - 5)
+                    << QPoint(x + w / 2 + 12, y + h / 2 - 12)
+                    << QPoint(x + w / 2 + 13, y + h / 2 + 5);
+
+                painter.setBrush(QColor(230, 55, 10));
+                painter.drawPolygon(fire);
+
+                // Middle flame
+                QPolygon innerFire;
+                innerFire << QPoint(x + w / 2, y + h / 2 + 12)
+                    << QPoint(x + w / 2 - 7, y + h / 2 + 2)
+                    << QPoint(x + w / 2, y + h / 2 - 10)
+                    << QPoint(x + w / 2 + 7, y + h / 2 + 2);
+
+                painter.setBrush(QColor(255, 170, 20));
+                painter.drawPolygon(innerFire);
+
+                // Bright center
+                painter.setBrush(QColor(255, 240, 120));
+                painter.drawEllipse(
+                    QPoint(x + w / 2, y + h / 2 + 5), 3, 5
+                );
+            }
+
+            // Always display the hallway name
+            painter.setPen(Qt::black);
+            painter.drawText(
+                QRect(x, y, w, h),
+                Qt::AlignCenter,
+                label
             );
-    };
+        };
+
 
     // tree with a trunk and leafy canopy
     auto drawTree = [&](int x, int y, int size)
@@ -225,16 +349,24 @@ void MapWidget::paintEvent(QPaintEvent *event)
 
 
     // HALLWAYS
-    drawHallway(160, 125, 470, 65, "Hallway 1");
-    drawHallway(160, 190, 70, 200, "Hallway 4");
-    drawHallway(560, 190, 70, 200, "Hallway 2");
-    drawHallway(160, 390, 470, 65, "Hallway 3");
+    drawHallway(160, 125, 470, 65, "Hallway 1", 101);
+    drawHallway(160, 190, 70, 200, "Hallway 4", 104);
+    drawHallway(560, 190, 70, 200, "Hallway 2", 102);
+    drawHallway(160, 390, 470, 65, "Hallway 3", 103);
 
     // ROOMS
 
     // room 1: L-shaped upper-left room
     painter.setPen(wallPen);
-    painter.setBrush(roomBrush);
+
+    if (selectedRoomId == 1)
+    {
+        painter.setBrush(selectedRoomBrush);
+    }
+    else
+    {
+        painter.setBrush(roomBrush);
+    }
 
     QPolygon room1;
     room1 << QPoint(60, 25) //
@@ -258,7 +390,15 @@ void MapWidget::paintEvent(QPaintEvent *event)
 
     // room 4: L-shaped upper-right room
     painter.setPen(wallPen);
-    painter.setBrush(roomBrush);
+
+    if (selectedRoomId == 4)
+    {
+        painter.setBrush(selectedRoomBrush);
+    }
+    else
+    {
+        painter.setBrush(roomBrush);
+    }
 
     QPolygon room4;
     room4 << QPoint(560, 25)
@@ -286,7 +426,14 @@ void MapWidget::paintEvent(QPaintEvent *event)
 
     // room 10: L-shaped lower-left room
     painter.setPen(wallPen);
-    painter.setBrush(roomBrush);
+    if (selectedRoomId == 10)
+    {
+        painter.setBrush(selectedRoomBrush);
+    }
+    else
+    {
+        painter.setBrush(roomBrush);
+    }
 
     QPolygon room10;
     room10 << QPoint(60, 390)
@@ -310,7 +457,14 @@ void MapWidget::paintEvent(QPaintEvent *event)
 
     // room 7: L-shaped lower-right room
     painter.setPen(wallPen);
-    painter.setBrush(roomBrush);
+    if (selectedRoomId == 7)
+    {
+        painter.setBrush(selectedRoomBrush);
+    }
+    else
+    {
+        painter.setBrush(roomBrush);
+    }
 
     QPolygon room7;
     room7 << QPoint(630, 390)
@@ -329,32 +483,243 @@ void MapWidget::paintEvent(QPaintEvent *event)
         );
 
     // EXITS
-
     QPen exitPen(QColor(200, 35, 35), 2);
-    QBrush exitBrush(Qt::white);
 
+    // exit 1
     painter.setPen(exitPen);
-    painter.setBrush(exitBrush);
+    painter.setBrush(isExitBlocked(201)
+                         ? QBrush(QColor(255, 180, 180))
+                         : QBrush(Qt::white));
 
-    // exit 1: top of Hallway 1
     painter.drawRoundedRect(370, 114, 54, 22, 4, 4);
-
     painter.setPen(QColor(200, 35, 35));
-    painter.drawText(
-        QRect(370, 114, 54, 22),
-        Qt::AlignCenter,
-        "EXIT"
-        );
+    painter.drawText(QRect(370, 114, 54, 22),
+                     Qt::AlignCenter, "EXIT 1");
 
-    // exit 2: bottom of Hallway 3
+    if (isExitBlocked(201))
+    {
+        painter.setPen(Qt::NoPen);
+
+        // Outer flame
+        QPolygon fire;
+        fire << QPoint(397, 112)
+            << QPoint(389, 119)
+            << QPoint(391, 108)
+            << QPoint(397, 100)
+            << QPoint(403, 108)
+            << QPoint(405, 119);
+
+        painter.setBrush(QColor(230, 55, 10));
+        painter.drawPolygon(fire);
+
+        // Inner flame
+        QPolygon innerFire;
+        innerFire << QPoint(397, 115)
+            << QPoint(392, 110)
+            << QPoint(397, 104)
+            << QPoint(402, 110);
+
+        painter.setBrush(QColor(255, 170, 20));
+        painter.drawPolygon(innerFire);
+    }
+
+    // exit 2
     painter.setPen(exitPen);
-    painter.setBrush(exitBrush);
-    painter.drawRoundedRect(370, 444, 54, 22, 4, 4);
+    painter.setBrush(isExitBlocked(202)
+                         ? QBrush(QColor(255, 180, 180))
+                         : QBrush(Qt::white));
 
+    painter.drawRoundedRect(370, 444, 54, 22, 4, 4);
     painter.setPen(QColor(200, 35, 35));
-    painter.drawText(
-        QRect(370, 444, 54, 22),
-        Qt::AlignCenter,
-        "EXIT"
+    painter.drawText(QRect(370, 444, 54, 22),
+                     Qt::AlignCenter, "EXIT 2");
+    if (isExitBlocked(202))
+    {
+        painter.setPen(Qt::NoPen);
+
+        // Outer flame
+        QPolygon fire;
+        fire << QPoint(397, 442)
+            << QPoint(389, 449)
+            << QPoint(391, 438)
+            << QPoint(397, 430)
+            << QPoint(403, 438)
+            << QPoint(405, 449);
+
+        painter.setBrush(QColor(230, 55, 10));
+        painter.drawPolygon(fire);
+
+        // Inner flame
+        QPolygon innerFire;
+        innerFire << QPoint(397, 445)
+            << QPoint(392, 440)
+            << QPoint(397, 434)
+            << QPoint(402, 440);
+
+        painter.setBrush(QColor(255, 170, 20));
+        painter.drawPolygon(innerFire);
+    }
+
+    // Draw two adults and fire in the selected room
+    if (selectedRoomId != -1)
+    {
+        QPoint personPosition;
+
+        switch (selectedRoomId)
+        {
+        case 1:  personPosition = QPoint(110, 75); break;
+        case 2:  personPosition = QPoint(275, 75); break;
+        case 3:  personPosition = QPoint(435, 75); break;
+        case 4:  personPosition = QPoint(650, 75); break;
+        case 5:  personPosition = QPoint(650, 220); break;
+        case 6:  personPosition = QPoint(650, 320); break;
+        case 7:  personPosition = QPoint(650, 475); break;
+        case 8:  personPosition = QPoint(435, 475); break;
+        case 9:  personPosition = QPoint(275, 475); break;
+        case 10: personPosition = QPoint(90, 475); break;
+        case 11: personPosition = QPoint(90, 310); break;
+        case 12: personPosition = QPoint(90, 210); break;
+        default: break;
+        }
+
+        drawPerson(painter, personPosition.x(), personPosition.y(), QColor(60, 120, 200));
+
+        drawPerson(painter, personPosition.x() + 30, personPosition.y(), QColor(190, 90, 140));
+
+        // Draw a more realistic fire in the selected room
+        painter.setPen(Qt::NoPen);
+
+        // Outer flame
+        QPolygon fire;
+        fire << QPoint(personPosition.x() + 75, personPosition.y() + 25)
+            << QPoint(personPosition.x() + 62, personPosition.y() + 12)
+            << QPoint(personPosition.x() + 66, personPosition.y() - 2)
+            << QPoint(personPosition.x() + 72, personPosition.y() + 5)
+            << QPoint(personPosition.x() + 75, personPosition.y() - 12)
+            << QPoint(personPosition.x() + 82, personPosition.y() + 4)
+            << QPoint(personPosition.x() + 88, personPosition.y() - 2)
+            << QPoint(personPosition.x() + 88, personPosition.y() + 12);
+
+        painter.setBrush(QColor(230, 55, 10));
+        painter.drawPolygon(fire);
+
+        // Middle flame
+        QPolygon innerFire;
+        innerFire << QPoint(personPosition.x() + 75, personPosition.y() + 20)
+            << QPoint(personPosition.x() + 68, personPosition.y() + 10)
+            << QPoint(personPosition.x() + 75, personPosition.y() - 2)
+            << QPoint(personPosition.x() + 82, personPosition.y() + 10);
+
+        painter.setBrush(QColor(255, 170, 20));
+        painter.drawPolygon(innerFire);
+
+        // Bright center
+        painter.setBrush(QColor(255, 240, 120));
+        painter.drawEllipse(
+            QPoint(personPosition.x() + 75, personPosition.y() + 12), 3, 5
         );
+    }
+
+    // Draw the calculated evacuation route
+    if (!currentRoute.empty())
+    {
+        QPainterPath routePath;
+        bool firstPoint = true;
+        int previousLocationId = -1;
+
+        for (int locationId : currentRoute)
+        {
+            QPoint point;
+
+            switch (locationId)
+            {
+            case 201: point = QPoint(397, 125); break; // Exit 1
+            case 202: point = QPoint(397, 445); break; // Exit 2
+
+            case 101: point = QPoint(395, 155); break; // Hallway 1
+            case 102: point = QPoint(595, 290); break; // Hallway 2
+            case 103: point = QPoint(395, 420); break; // Hallway 3
+            case 104: point = QPoint(195, 290); break; // Hallway 4
+
+            case 1: point = QPoint(145, 155); break;
+            case 2: point = QPoint(310, 125); break;
+            case 3: point = QPoint(475, 125); break;
+            case 4: point = QPoint(645, 155); break;
+            case 5: point = QPoint(645, 240); break;
+            case 6: point = QPoint(645, 340); break;
+            case 7: point = QPoint(645, 490); break;
+            case 8: point = QPoint(475, 490); break;
+            case 9: point = QPoint(310, 490); break;
+            case 10: point = QPoint(145, 490); break;
+            case 11: point = QPoint(110, 340); break;
+            case 12: point = QPoint(110, 240); break;
+
+            default: continue;
+            }
+
+            if (firstPoint)
+            {
+                routePath.moveTo(point);
+                firstPoint = false;
+            }
+            else
+            {
+                // Avoid crossing the central garden between hallways
+                if (previousLocationId == 102 && locationId == 101)
+                {
+                    routePath.lineTo(QPoint(595, 155));
+                    routePath.lineTo(QPoint(395, 155));
+                }
+                else if (previousLocationId == 101 && locationId == 102)
+                {
+                    routePath.lineTo(QPoint(395, 155));
+                    routePath.lineTo(QPoint(595, 155));
+                }
+                else if (previousLocationId == 104 && locationId == 103)
+                {
+                    routePath.lineTo(QPoint(195, 290));
+                    routePath.lineTo(QPoint(195, 420));
+                }
+                else if (previousLocationId == 103 && locationId == 104)
+                {
+                    routePath.lineTo(QPoint(195, 420));
+                    routePath.lineTo(QPoint(195, 290));
+                }
+                else if (previousLocationId == 101 && locationId == 104)
+                {
+                    routePath.lineTo(QPoint(195, 155));
+                    routePath.lineTo(QPoint(195, 290));
+                }
+                else if (previousLocationId == 104 && locationId == 101)
+                {
+                    routePath.lineTo(QPoint(195, 290));
+                    routePath.lineTo(QPoint(195, 155));
+                }
+                else if (previousLocationId == 102 && locationId == 103)
+                {
+                    routePath.lineTo(QPoint(595, 290));
+                    routePath.lineTo(QPoint(595, 420));
+                }
+                else if (previousLocationId == 103 && locationId == 102)
+                {
+                    routePath.lineTo(QPoint(595, 420));
+                    routePath.lineTo(QPoint(595, 290));
+                }
+                else
+                {
+                    routePath.lineTo(point);
+                }
+            }
+
+            previousLocationId = locationId;
+        }
+
+        QPen routePen(QColor(0, 170, 70), 7);
+        routePen.setCapStyle(Qt::RoundCap);
+        routePen.setJoinStyle(Qt::RoundJoin);
+
+        painter.setPen(routePen);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPath(routePath);
+    }
 }
