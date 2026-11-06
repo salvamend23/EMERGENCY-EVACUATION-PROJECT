@@ -23,3 +23,16 @@ GUI Features
 - Block Hallway
 - Block Exit
 - Compare Exits
+
+Build Instructions
+1. Open the FireScape GUI project in Visual Studio Community 2022.
+2. Make sure the Qt 6.12.0 MSVC 2022 64-bit kit and the required Qt Widgets components are configured.
+3. Allow CMake to configure the project.
+4. Select the desired build configuration (Debug or Release).
+5. Build the project using Build Solution.
+
+Run Instructions
+1. After a successful build, locate the FireScape executable in the project's build directory.
+2. Select the executable as the startup target in Visual Studio.
+3. Run the application using Start Without Debugging or Start Debugging.
+4. The FireScape Emergency Simulator main window should appear.
