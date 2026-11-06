@@ -1,44 +1,24 @@
-#include <iostream>
-using namespace std;
-#include <vector>
 #pragma once
+#include "Location.h"
+#include <vector>
 
-
-class room {
+class Room : public Location {
+private:
+    std::vector<int> connections;
 public:
-    int id;
-    string name;
-    vector<int> connections;
-
-    room(int number, string roomname) {
-        id = number;
-        name = roomname;
+    Room(int number, const std::string& roomName) 
+        : Location(number, roomName) {
     }
-    void addconection(int hallid) {
-        connections.push_back(hallid);
-
+    // adds a hallway connected to this room
+    void addConnection(int hallwayId) {
+        connections.push_back(hallwayId);
     }
-
-};
-
-class hallways {
-public:
-    int hallid;
-    vector <int> hallconnections;
-    hallways(int number) {
-        hallid = number;
-    }
-    void addhallConnection(int location) {
-        hallconnections.push_back(location);
-    }
-};
-
-class exits {
-public:
-    int exitid;
-    bool available;
-    exits(int number) {
-        exitid = number;
-        available = true;
+    // returns the hallways connected to this room
+    const std::vector<int>& getConnections() const {
+        return connections;
+    }    
+    // implements the pure virtual function from Location
+    std::string getLocationType() const override {
+        return "Room";
     }
 };
