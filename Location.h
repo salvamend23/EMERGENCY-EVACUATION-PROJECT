@@ -14,7 +14,7 @@ public:
 	}
 
 	//virtual destructor, allowing derived objects
-	//defaul tell the compiler to generate the standard destructor
+	// = default tell the compiler to generate the standard destructor
 	virtual ~Location() = default;
 
 	int getId() const {
@@ -25,6 +25,7 @@ public:
 		return name;
 	}
 
-	//each derived class must implement this, =0 makes Location an abstract class
+	//each derived class must implement this class 
+	// = 0 makes Location an abstract class
 	virtual std::string getLocationType() const = 0;
 };
