@@ -1,6 +1,6 @@
 // PROJECT DEMO PRACTICE.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
+#include <fstream>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -16,6 +16,51 @@
 #include "Pathfinder.h"
 
 using namespace std;
+
+struct emergency_record {
+    int startRoomId;
+    int blockedLocationId;
+};
+
+void save_emergency(int startRoomId, int blockedLocationId) {
+
+    ofstream file("emergencies.txt", ios::app);
+
+    if (!file.is_open()) {
+        cout << "ERROR: Could not open emergency file!" << endl;
+        return;
+    }
+
+    file << startRoomId << " " << blockedLocationId << endl;
+
+    file.close();
+
+    cout << "Emergency saved successfully!" << endl;
+}
+
+
+vector<emergency_record> load_emergencies() {
+
+    vector<emergency_record> emergencies;
+
+    ifstream file("emergencies.txt");
+
+    if (!file.is_open()) {
+        cout << "No saved emergencies found!" << endl;
+        return emergencies;
+    }
+
+    emergency_record emergency;
+
+    while (file >> emergency.startRoomId >> emergency.blockedLocationId) {
+        emergencies.push_back(emergency);
+    }
+
+    file.close();
+
+    return emergencies;
+}
+
 
 
 int main()
@@ -303,8 +348,48 @@ cout << "Program continues running.\n";
         cerr << "\nERROR: " << e.what() << endl;
     }
 
+    // LOAD PREVIOUS EMERGENCIES
+    cout << "\nUSED EMERGENCIES:\n";
 
+    vector<emergency_record> used_emergencies = load_emergencies();
 
+    for (emergency_record e : used_emergencies) {
+
+        cout << "Starting Room: " << e.startRoomId;
+
+        if (e.blockedLocationId >= 101 && e.blockedLocationId <= 104) {
+            cout << " | Blocked Hallway: " << e.blockedLocationId;
+        }
+        else if (e.blockedLocationId == 201 || e.blockedLocationId == 202) {
+            cout << " | Blocked Exit: " << e.blockedLocationId;
+        }
+
+        cout << endl;
+    }
+    if (!used_emergencies.empty()) {
+
+        emergency_record e = used_emergencies[0];
+
+        path_results loaded_result =
+            pathfinder.simulate_emergency(e.startRoomId, e.blockedLocationId);
+
+        if (loaded_result.found) {
+
+            cout << "\nLoaded emergency route: ";
+
+            for (int id : loaded_result.route) {
+                cout << id << " ";
+            }
+
+            cout << "\nDistance: "
+                << loaded_result.total_distance
+                << " METERS" << endl;
+        }
+        else {
+            cout << "No evacuation route for this emergency!" << endl;
+        }
+    }
+    save_emergency(5, 101);  // Block a hallway
 }
 
 
