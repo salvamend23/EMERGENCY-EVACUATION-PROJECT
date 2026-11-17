@@ -1,0 +1,26 @@
+CHECKLIST:
+Requirement	File / Function	Evidence
+1.- GUI Task 1: Find evacuation route	Pathfinder.cpp / calculate_distances()	Calculates the shortest route to an exit
+
+2.- GUI Task 2: Block hallway or exit	Pathfinder.cpp	Recalculates routes with a blocked location
+
+
+3.- GUI Task 3: Compare routes	compare_routes()	Compares alternative evacuation routes
+
+
+4.- Persistence: 	save_emergency()	Saves emergency records to a file
+
+
+5.- Exception handling::	 try {  int testRoom = 15; 	Handles invalid operations 
+
+
+6.- Runtime polymorphism	virtual location	used to transform variables
+
+
+7.- Function overloading	To verify	Two functions with the same name and different parameters
+
+
+8.- Template	Missing			Must demonstrate use with two data types
+
+
+9.- Destructor / Debugger	~MainWindow() / debugger evidence	Object cleanup and documented debugging investigation
