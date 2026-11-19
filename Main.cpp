@@ -61,7 +61,33 @@ vector<emergency_record> load_emergencies() {
     return emergencies;
 }
 
+// template: prints any vector whose elements support operator<<
+// used with vector<int> (route IDs) and vector<string> (room names)
+template <typename T>
+void printList(const string& label, const vector<T>& items) {
+    cout << label << ": ";
+    for (size_t i = 0; i < items.size(); i++) {
+        cout << items[i];
+        if (i + 1 < items.size()) cout << " -> ";
+    }
+    cout << endl;
+}
 
+// overload 1: prints a raw route (list of location IDs)
+void printRoute(const vector<int>& route) {
+    printList("Route", route);
+}
+
+// overload 2: prints a full pathfinder result (route, exit, distance, or "no route")
+void printRoute(const path_results& result) {
+    if (!result.found) {
+        cout << "No evacuation route available." << endl;
+        return;
+    }
+    printRoute(result.route);
+    cout << "Exit: " << result.exitid << " | Distance: "
+         << result.total_distance << " METERS" << endl;
+}
 
 int main()
 
