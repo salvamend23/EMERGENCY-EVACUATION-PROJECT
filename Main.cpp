@@ -415,6 +415,23 @@ cout << "Program continues running.\n";
             cout << "No evacuation route for this emergency!" << endl;
         }
     }
+    // runtime polymorphism: base-class pointers call two different derived behaviors
+    cout << "\nPOLYMORPHISM DEMO:\n";
+    vector<const Location*> allLocations;
+    for (const Room& r : rooms) allLocations.push_back(&r);
+    for (const Exit& e : exitLocations) allLocations.push_back(&e);
+    for (const Location* loc : allLocations) {
+        cout << loc->getName() << " (" << loc->getId() << ") -> " << loc->getLocationType() << endl;
+    }
+
+    // template used with two data types (int and string) + overload printRoute
+    cout << "\nTEMPLATE / OVERLOAD DEMO:\n";
+    vector<string> roomNames;
+    for (const Room& r : rooms) roomNames.push_back(r.getName());
+    printList("Room names", roomNames);   // T = string
+    printList("Room IDs", vector<int>{1, 2, 3});   // T = int
+    printRoute(results.route);            // overload 1: vector<int>
+    printRoute(results);                  // overload 2: path_results
     save_emergency(5, 101);  // Block a hallway
 }
 
